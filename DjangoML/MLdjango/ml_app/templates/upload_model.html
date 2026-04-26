@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+    <form id="uploadForm" class="m-5" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="greyImage" class="form-label">
+                Greyscale Image
+            </label>
+            <input type="file" id="greyImage" class="form-control" name="greyImage">
+            <div id="emailHelp" class="form-text">
+                We'll never share your data with anyone else.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <a href="{% url 'download_coloured_image' %}">Download</a>
+</div>
+{% endblock

@@ -1,0 +1,14 @@
+<!-- prediction/templates/prediction/result.html -->
+{% extends "prediction/base.html" %}
+{% block body %}
+<h2>Predicted :</h2></br>
+<div class="container">
+
+    {{ prediction }}
+</div>
+
+
+{% if error %}
+<p>Error: {{ error }}</p>
+{% endif %}
+{% endblock %}
