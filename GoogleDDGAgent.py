@@ -2,11 +2,11 @@ from langchain.tools import tool
 from langchain.messages import HumanMessage,SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.tools import DuckDuckGoSearchRun
+from dotenv import load_dotenv
+load_dotenv()
+api_key=os.getenv("GOOGLE_API_KEY")
 
 # Define the tool
-#@tool(description="Get the current weather in a given location")
-#def get_weather(location: str) -> str:
- #   return "It's sunny."
 
 @tool(description="Search the web using DuckDuckGo and load content from the first result")
 def ddgs_search_and_load(query: str) -> str:
@@ -35,7 +35,7 @@ query=input("Enter your query: ")
 prompt= 'You are a helpful medical assistant and you need to answer the question based on the search result provided in brief. If the search result does not contain relevant information, answer based on your knowledge.'
 
 # Initialize and bind (potentially multiple) tools to the model
-model_with_tools = ChatGoogleGenerativeAI(model="gemini-3-flash-preview", api_key="AIzaSyCJJZqH1IMuZaJD-mdQlvdXI4Smkf3B1G0").bind_tools([ddgs_search_and_load])
+model_with_tools = ChatGoogleGenerativeAI(model="gemini-3-flash-preview", api_key=api_key).bind_tools([ddgs_search_and_load])
 
 # Step 1: Model generates tool calls
 
