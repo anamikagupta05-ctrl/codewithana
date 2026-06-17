@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-4">
+    <h3>Add Expense</h3>
+    <form method="post" action="{% url 'add_expense' %}" class="mb-4">
+        <table class="table table-borderless">
+            {% csrf_token %}
+            {{ form.as_table}}
+        </table>
+        </br></br>
+        <button type="submit" class="btn btn-dark">Add Expense</button>
+
+    </form>
+    <div class="fieldWrapper">
+        {% if forms.errors %}
+        {% for error in form.field_name.errors %}
+        <div class="error">{{ error }}</div>
+        {% endfor %}
+
+        {% endif %}
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-4">
+    <h3>Update Expense</h3>
+    {% if form %}
+    <form method="post" action="{% url 'update_expense' expense_id=expense_id %}" class="mb-4">
+        <table class="table table-borderless">
+            {% csrf_token %}
+            {{ form.as_table}}
+        </table>
+        </br></br>
+        <button type="submit" class="btn btn-dark">Update Expense</button>
+
+    </form>
+    {% endif %}
+    <div class="fieldWrapper">
+        {% if forms.errors %}
+        {% for error in form.field_name.errors %}
+        <div class="error">{{ error }}</div>
+        {% endfor %}
+
+        {% endif %}
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+    </div>
+</div>
+
+
+{% endblock %}

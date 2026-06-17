@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid"> <!-- Fixed container_fluid to container-fluid -->
+    <h2>Expenses List</h2>
+    <p class="text-start fs-5">Track spending, filter by date/category, and visualize instantly.</p>
+
+    <div class="row">
+        <div class="col-md-8"> <!-- Expanded to col-md-8 to comfortably fit a 6-column table -->
+            {% if expense_list %}
+            <div class="mb-3">
+                <p><b>Total Expenses:</b> Rs. {{ total|floatformat:2 }}</p>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-borderless align-middle">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">Category</th>
+                            <th class="text-end">Amount</th>
+                            <th class="text-center">Edit</th>
+                            <th class="text-center">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expense_list %}
+                        <tr>
+                            <td class="px-2 py-1 text-center text-nowrap">{{ expense.date }}</td>
+                            <td class="px-2 py-1 text-center">{{ expense.description }}</td>
+                            <td class="px-2 py-1 text-center">{{ expense.category }}</td>
+                            <!-- Changed $ to Rs. to match your total label above -->
+                            <td class="px-2 py-1 text-end">Rs. {{ expense.amount|floatformat:2 }}</td>
+                            <td class="px-2 py-1 text-center">
+                                <a href="{% url 'update_expense' expense_id=expense.expense_id %}"
+                                    class="btn btn-sm btn-dark">Edit</a>
+                            </td>
+                            <td class="px-2 py-1 text-center">
+                                <a href="{% url 'delete_expense' expense_id=expense.expense_id %}"
+                                    class="btn btn-sm btn-dark">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <!-- Pagination row belongs inside tfoot or tbody, completely separate from the loop -->
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" class="text-start">
+                                {% if expense_list.has_previous %}
+                                <a href="?page=1" class="btn btn-dark btn-sm">&laquo; First</a>
+                                <a href="?page={{ expense_list.previous_page_number }}"
+                                    class="btn btn-dark btn-sm">Previous</a>
+                                {% endif %}
+                            </td>
+                            <td colspan="2" class="text-center">
+                                <span class="align-middle">
+                                    Page {{ expense_list.number }} of {{ expense_list.paginator.num_pages }}.
+                                </span>
+                            </td>
+                            <!-- Fixed the extra quotes and broken colspan string in your original code -->
+                            <td colspan="2" class="text-end">
+                                {% if expense_list.has_next %}
+                                <a href="?page={{ expense_list.next_page_number }}" class="btn btn-dark btn-sm">Next</a>
+                                <a href="?page={{ expense_list.paginator.num_pages }}" class="btn btn-dark btn-sm">Last
+                                    &raquo;</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            {% else %}
+            <!-- Moved the empty state outside of the table loop wrapper completely -->
+            <div class="alert alert-info text-center" role="alert">
+                No expenses yet — add your first one above.
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Expense Tracker{% endblock %} </title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    </link>
+    <!-- Paste this inside your <head> section -->
+    
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Middle layout that holds the two panes */
+        .main-content {
+            display: flex;
+            flex: 1;
+            /* Pushes footer to the bottom */
+        }
+
+        /* Left pane for Series URLs */
+        .left-pane {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+        }
+
+        .left-pane h3 {
+            margin-bottom: 15px;
+        }
+
+        .left-pane ul {
+            list-style-type: none;
+        }
+
+        .left-pane li {
+            margin-bottom: 10px;
+        }
+
+        .left-pane a {
+            text-decoration: none;
+            color: #e9ebed;
+        }
+
+        .left-pane a:hover {
+            text-decoration: underline;
+        }
+
+        /* Right pane for Test Text */
+        .right-pane {
+            flex: 1;
+            padding: 40px;
+            background-color: #ffffff;
+        }
+    </style>
+    <link rel="stylesheet" href="https://jsdelivr.net">
+    </link>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!--link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/" /-->
+    {% block head %}{% endblock %}
+
+</head>
+
+<body>
+
+    <!-- Header Include -->
+    {% include 'header.html' %}
+
+    <div class="main-content">
+        <!-- Left Pane: Series URLs -->
+        <aside class="left-pane">
+            <h3>Expense Tracker</h3>
+            <ul>
+                <li><a href="{% url 'add_expense' %}">Add Expense</a></li>
+                <li><a href="{% url 'expense_list' %}">View Expenses List</a></li>
+                <li><a href="{% url 'search_expenses' %}">Filters/Report</a></li>
+                <li><a href="{% url 'monthly_report' %}">Monthly Expense Report</a></li>
+            </ul>
+        </aside>
+
+        <!-- Right Pane: Test Text -->
+        <main class="right-pane">
+            {% block content %}
+            {% endblock %}
+
+            {% block scripts %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <!-- Footer Include -->
+    {% include 'footer.html' %}
+
+</body>
+
+</html>
